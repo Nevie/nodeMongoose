@@ -1,0 +1,14 @@
+doctype html
+html(lang='en')
+    head
+        title Jade
+    body
+        #container.col
+            p News list
+            ul#newsList
+                each news in newsList
+                    li
+                        article
+                            h1=news.title
+                            p=news.description
+                            span=" Author: " + news.author
