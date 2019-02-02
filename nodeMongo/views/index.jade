@@ -1,0 +1,24 @@
+block content
+  h1= title
+  p
+    a(href='/auth/facebook') Login with Facebook
+  p LOGIN
+      form(action='/auth/login', method='post')
+          | Email
+          input(type='text', name='email', value='test@mail.com')
+          br
+          |               Password
+          input(type='number', name='password', value='1234567890')
+          br
+          button Login
+  p SIGN UP
+     form(action='/auth/signup', method='post')
+        | Email
+        input(type='text', name='email')
+        br
+        |               Password
+        input(type='number', name='password')
+        br
+        button Sing up
+  p
+      a(href='/auth/logout') Logout

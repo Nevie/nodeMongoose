@@ -1,10 +1,10 @@
 const NewsService = require('../service/newsService');
 let express = require('express');
 let router = express.Router();
+let logHelp = require('../helpers/loginHelper');
 const newsService = new NewsService();
 
 router.get('/', function (req, res, next) {
-    console.log("get")
     newsService.getNews().then(news=>{
         res.render('news', { newsList: news});
     }).catch(err => {
@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    console.log("get ID")
     newsService.findById(req.params.id).then(news => {
         res.render('news', {newsList: [news]});
     }).catch(err => {
@@ -22,7 +21,6 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    console.log("post")
     let news = {
         description: req.body.description,
         title: req.body.title,
@@ -38,8 +36,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
-router.put('/:id', function (req, res, next) {
-    console.log("put")
+router.put('/:id', logHelp.isLoggedIn, function (req, res, next) {
     let news = {
         author: req.body.author,
         title: req.body.title,
@@ -55,8 +52,7 @@ router.put('/:id', function (req, res, next) {
     });
 });
 
-router.delete('/:id', function (req, res, next) {
-    console.log("delete")
+router.delete('/:id', logHelp.isLoggedIn, function (req, res, next) {
     newsService.delete(req.params.id).then(news => {
         newsService.getNews().then(news=>{
             res.render('news', { newsList: news});
